@@ -1,7 +1,8 @@
-import { INCREMENT, INCREMENTBY10 } from "../actions/types"
+import { INCREMENT, INCREMENTASYNC, INCREMENTBY10, SETLOADING } from "../actions/types"
 
 const initialState = {
-    count : 0
+    count : 0,
+    loading : false
 }
 
 const countReducer = (state = initialState, action)=>{
@@ -10,6 +11,10 @@ const countReducer = (state = initialState, action)=>{
             return {...state, count : state.count+1}
         case INCREMENTBY10 : 
             return {...state, count : state.count+action.payload}
+        case SETLOADING :
+            return {...state, loading : true}
+        case INCREMENTASYNC : 
+            return {...state, count : state.count+1, loading : false}
         default:
             return state
     }
