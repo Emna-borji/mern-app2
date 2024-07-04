@@ -1,20 +1,25 @@
 import React, { useState } from 'react'
 import FormContainer from '../components/FormContainer'
-import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Button, Col, Form, Row, Alert, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { register } from '../redux/actions/authActions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Register = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPasssword, setConfirmPassword] = useState("")
+    
+    const {user, isLoading, isError, message} = useSelector((state)=>state.authReducer)
+    const dispatch = useDispatch()
 
     const handleSubmit = (e)=>{
         e.preventDefault()
         if (password !== confirmPasssword) {
             return alert("Passwords do not match")
         }
-        
+        dispatch(register({name, email, password}))
     }
 
   return (
@@ -22,6 +27,7 @@ const Register = () => {
         <h1 className='text-center mb-5'>
             Account <span className="text-primary">Register</span>
         </h1>
+        {isError && <Alert variant='danger'>{message}</Alert>}
         <Form onSubmit={handleSubmit}>
             <Form.Group className='mb-3' controlId='name'>
                 <Form.Label className='mb-3'>
@@ -55,7 +61,7 @@ const Register = () => {
                     
                 </Form.Control>
             </Form.Group>
-            <Button type='submit' variant='primary' className='mt-3'>Sign up</Button>
+            <Button type='submit' variant='primary' className='mt-3'>{isLoading && <Spinner as='span' animation='grow' size='sm' role='status' aria-hidden='true'/>} {isLoading ? "waiting..." : "Sign up"}</Button>
             <Row className="py-3">
                 <Col>
                     Already have an account? <Link to="/login">Login</Link>
