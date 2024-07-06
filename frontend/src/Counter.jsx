@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { increment, incrementAsync, incrementBy10 } from './redux/actions/countActions'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -6,6 +6,9 @@ const Counter = () => {
     const dispatch = useDispatch()
     const count = useSelector((state)=>state.countReducer.count)
     const loading = useSelector((state)=>state.countReducer.loading)
+    useEffect(()=>{console.log("hiii")
+      return ()=>console.log("byyyee")
+    }, [count])
   return (
     <div>
         <button onClick={()=>dispatch(increment())}>+</button>

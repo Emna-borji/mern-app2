@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import FormContainer from '../components/FormContainer'
 import { Button, Col, Form, Row, Alert, Spinner } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { login } from '../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -17,6 +17,9 @@ const Login = () => {
         e.preventDefault()
         dispatch(login({email, password}))
     }
+    if(user)
+        return <Navigate to="/"/>
+        
   return (
     <FormContainer>
         <h1 className='text-center mb-5'>

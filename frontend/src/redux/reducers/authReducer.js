@@ -1,4 +1,4 @@
-import { AUTH_ERROR, AUTH_LOADING, AUTH_LOGIN, AUTH_REGISTER } from "../actions/types"
+import { AUTH_ERROR, AUTH_LOADING, AUTH_LOGIN, AUTH_LOGOUT, AUTH_PROFILE, AUTH_REGISTER } from "../actions/types"
 
 // Initial state
 const initialState = {
@@ -14,7 +14,10 @@ const authReducer = (state = initialState, action)=>{
             return {...state, isLoading : action.payload} 
         case AUTH_REGISTER : 
         case AUTH_LOGIN : 
+        case AUTH_PROFILE : 
             return {...state, user : action.payload, isLoading : false, isSuccess : true, isError : false, message : ""}
+        case AUTH_LOGOUT :
+            return initialState
         case AUTH_ERROR :
             return {...state, isLoading : false, isSuccess : false, isError : true, message : action.payload}
         

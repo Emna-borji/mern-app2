@@ -1,8 +1,12 @@
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/actions/authActions';
 
 const Header = () => {
+  const {user} = useSelector(state=>state.authReducer)
+  const dispatch = useDispatch()
   return (
     <header>
       <Navbar bg="dark" data-bs-theme="dark" expand="lg">
@@ -12,7 +16,9 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
+            {user ? (<Nav className='ms-auto'>
+              <Button onClick={()=>{dispatch(logout())}}><FaSignOutAlt/>logout</Button>
+            </Nav>) : (<Nav className="ms-auto">
               <LinkContainer to="/login">
                 <Nav.Link
                   style={{
@@ -33,7 +39,7 @@ const Header = () => {
                   <FaUser /> <span className="px-2">Sign Up</span>
                 </Nav.Link>
               </LinkContainer>
-            </Nav>
+            </Nav>)}
           </Navbar.Collapse>
         </Container>
       </Navbar>
